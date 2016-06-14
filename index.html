@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>扫雷</title>
+
+</head>
+<style>
+@font-face {
+  font-family: appleicons-text;
+  src: local(appleicons_text), url("./font/HanHei-SC-semibold.woff");
+  }
+
+  body{
+     font-family: appleicons-text;
+  }
+.da{
+    width: 900px;
+    height: 675px;
+    background: url(./image/dbg.jpg);
+    position:relative; 
+    margin: auto;
+    left:0;
+    right: 0;
+    top:0;
+    bottom: 0;
+    z-index: 10000;
+ }
+    .play{
+        width:140px;
+        height: 70px;
+        position: absolute;
+        top:410px;
+        left: 710px;
+        cursor: pointer;
+    }
+    .one{
+        width: 900px;
+        height: 675px;
+        background: url(./image/bg.jpg);
+        position:relative; 
+        margin: auto;
+        left:0;
+        right: 0;
+        top:0;
+        bottom: 0;
+     }
+	.sence{ 
+        text-align: center;
+		width:600px;
+		height:600px;
+		margin:auto;
+		background:#964A01;
+        opacity: 0.8;
+		position: absolute;
+		left:210px;
+		right: 0;
+		top:0;
+		bottom: 0;
+        border:5px solid #643302;
+      /*   z-index: 1000; */
+	}
+	.black{
+		font-size: 20px;
+		width:38px;
+		height:38px;
+		background: #F4B254;
+		float: left;
+        margin: 1px 1px 1px 1px;
+        text-align: center;
+        line-height: 38px;
+      /*  border:3px solid #643302; */
+
+	}
+    .xiao{
+        width: 250px;
+        height: 450px;
+        background:#D4D190;
+        position: absolute;
+        top: 110px;
+        opacity: 0.8;
+    }
+	.biaoji::after{
+		content:"⛳";
+	}
+	.tip{
+		background:white;
+	}
+    .two{
+        border-radius: 5%;
+        width:150px;
+        height:50px;
+        position: absolute;
+        top: 80px;
+        left:50px;
+       background: #77773E;
+        font-size: 30px;
+        text-align: center;
+       line-height: 50px;
+
+    }
+     .three{
+       border-radius: 5%;
+        width:150px;
+        height:50px;
+        position: absolute;
+        top: 200px;
+        left:50px;
+       background: #77773E;
+        font-size: 30px;
+        text-align: center; 
+         line-height: 50px;   
+    }
+   .six{
+      border-radius: 5%;
+        width:150px;
+        height:50px;
+        position: absolute;
+        top: 320px;
+        left:50px;
+       background: #77773E;
+        font-size: 30px;
+        text-align: center; 
+        line-height: 50px;
+    }
+    .five{
+        width: 400px;
+        height: 200px;
+        background: url(./image/slBT.jpg);
+        z-index:999;
+         position: relative;
+         margin:auto;
+         top:240px;
+         left:110px;
+         color:red;
+         font-size: 60px;
+         text-align: center;
+         line-height:200px;
+
+    }
+     .nine{
+        width: 400px;
+        height: 200px;
+        background: url(./image/slBT.jpg);
+        z-index:999;
+         position: relative;
+         margin:auto;
+         top:240px;
+         left:110px;
+         color:red;
+         font-size: 60px;
+         text-align: center;
+         line-height:200px;
+          display: none;
+    }
+  .cishu{
+    position: absolute;
+    top:50px;
+    left:86px;
+    font-size:28px;
+  }
+  .youlei{
+    position: absolute;
+    top:170px;
+    left:86px;
+    font-size:28px;
+  }
+  .start{
+    position: absolute;
+    top:290px;
+    left:86px;
+    font-size:28px;
+  }
+</style>
+<body>
+<div class="da">
+    <div class="play"></div>
+</div>
+<div class="one">
+<div class="sence"></div>
+<div class="xiao">
+<span class="cishu"><strong>Click:</strong></span>
+<div class="two"><span>0</span></div>
+<span class="youlei"><strong> mines:</strong></span>
+<div class="six"><span>重新开始</span></div>
+<span class="start"><strong>start:</strong></span>
+<div class="three"></div>
+</div>
+<div class="five">GAME OVER</div>
+<div class="nine">YOU WIN</div>
+</div>
+
+	 <script src='jquery-1.12.0.js'></script>
+	 <script>
+    $(function(){
+    	$(document).on('contextmenu',false);
+        var xyid=function(a,b){
+        	return a+'-'+b;
+       }
+       var jisuan=function(x,y){
+          var num=0;
+         if($("#"+xyid(x,y-1)).is('.lei')){num++}
+         if($("#"+xyid(x,y+1)).is('.lei')){num++}
+         if($("#"+xyid(x-1,y-1)).is('.lei')){num++}
+         if($("#"+xyid(x-1,y+1)).is('.lei')){num++}
+         if($("#"+xyid(x+1,y-1)).is('.lei')){num++}
+         if($("#"+xyid(x+1,y+1)).is('.lei')){num++}
+         if($("#"+xyid(x+1,y)).is('.lei')){num++}
+         if($("#"+xyid(x-1,y)).is('.lei')){num++}
+         	return num;
+       }
+    	var mousedownHandler=function(e){
+    		
+           if(e.which===1){
+       /*    	$.proxy(left,this)(e)*/
+           	zuojian.call(this,e)
+           /*	console.log(zuojian)*/
+           }else if(e.which===3){
+           	youjian.call(this,e)
+         /*  	$.proxy(left,this)(e)*/
+           }
+    	}
+       
+ $('.six').on('click',function(){
+                       a=0;
+                    xuanran();
+                   
+                  })
+        var a=0;
+    	var zuojian=function(e){
+    		if($(this).is('.biaoji')){
+    			return;
+    		}
+            if(e.data.lei){
+            	$('.five').show();
+               sence.find('div').off('mousedown');
+              $('.lei').css({'background':'url(./image/proxy.gif)','background-size':'cover','opacity':0});
+               $('.lei').each(function(i,v){
+                   $(this)
+                   .delay(i*150)
+                   .animate({opacity:1},200)
+                   .delay(i*150)
+                   .queue(function(){
+                    $(this).removeClass('lei').dequeue();
+                    if(!($('.block').is('.lei'))){
+                        $('#sence').html('');
+                      
+                    }
+                   })
+               })
+             
+            }else{
+                a++; 
+                $('.two').text(a);
+            $(this).text(jisuan(e.data.x,e.data.y)).addClass('tip')          
+    	  }
+          
+    }
+        var youjian=function(e){
+        	if($(this).is('.tip')){
+        		return;
+        	}
+            as--;
+            $('.three').text(as)
+        	$(this).toggleClass('biaoji')
+        	if($('.biaoji.lei').length===$(".lei").length){
+        		  $('.nine').show();
+                
+        	}
+        }
+       $('.play').on('click',function(i,v){
+               $('.da').hide();
+       })
+        
+        var sence=$('.sence'),five=$('.five');
+        five.hide();
+    var xuanran=function(){
+        as=0;
+        five.hide();
+        sence.empty();
+    	for(var i=0;i<15;i++){
+        for(var j=0;j<15;j++){
+         var islei=Math.random() >0.9;
+
+    	$('<div>')
+    	.attr('id',i+'-'+j)
+        .addClass(function(){
+        as=islei ? as+1:as;
+         	return 'black ' + (islei ? 'lei':'');
+         })
+        // .text(function(){
+        //  return islei ? 'lei':'';
+        //    })
+
+        .on('mousedown',{x:i,y:j,lei:islei},mousedownHandler)
+    	.appendTo('.sence')
+    } 
+   }
+   $('.three').text(as)
+}
+xuanran()
+ // var timeId=(setInterval(){
+ //    var two=$('.two')
+ //    var  i=0;
+ //    i++;
+ // },1000)
+    })
+	 </script>
+</body>
+</html>
