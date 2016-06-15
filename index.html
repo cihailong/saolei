@@ -15,9 +15,10 @@
      font-family: appleicons-text;
   }
 .da{
+
     width: 900px;
     height: 675px;
-    background: url(./image/dbg.jpg);
+    background: url(./image/a1.jpg);
     position:relative; 
     margin: auto;
     left:0;
@@ -26,18 +27,29 @@
     bottom: 0;
     z-index: 10000;
  }
+ .saolei{
+    position: absolute;
+    color:white;
+    top: 50px;
+    left:280px; 
+    font-size: 100px;
+ }
     .play{
-        width:140px;
-        height: 70px;
+        width:100px;
+        height: 100px;
         position: absolute;
-        top:410px;
-        left: 710px;
+        bottom:50px;
+        left: 400px;
+        font-size: 80px;
         cursor: pointer;
+        background: url(./image/b1.png);
+        background-size:cover;
+        border:none;
     }
     .one{
         width: 900px;
         height: 675px;
-        background: url(./image/bg.jpg);
+        background: url(./image/c1.jpg);
         position:relative; 
         margin: auto;
         left:0;
@@ -173,8 +185,8 @@
   }
 </style>
 <body>
-<div class="da">
-    <div class="play"></div>
+<div class="da"><span class="saolei">扫雷游戏</span>
+  <button type="text" value="play"  class="play"></button>
 </div>
 <div class="one">
 <div class="sence"></div>
